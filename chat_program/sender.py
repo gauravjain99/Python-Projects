@@ -7,6 +7,9 @@ s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 ip_address = socket.gethostbyname(socket.gethostname())
 port = 9998
 
+# IP address of the person to talk to 
+opposite_ip = input("Enter IP address of the person to talk to : ")
+
 s.bind((ip_address,port))
 
 print("Enter the message : ")
@@ -14,7 +17,7 @@ print("Enter the message : ")
 def send_func():
 	while True:
 		s_message = input()
-		s.sendto(("Sender : " + s_message).encode(),("192.168.43.15",9988))
+		s.sendto(("Sender : " + s_message).encode(),(opposite_ip,9988))
 	
 def recv_func():
 	while True:
