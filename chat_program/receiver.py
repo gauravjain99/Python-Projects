@@ -2,20 +2,35 @@
 
 import socket
 import time 
+import threading
+
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 ip_address = socket.gethostbyname(socket.gethostname())
 port = 9988
-
+  
 s.bind((ip_address,port))
 
-while True:
-	data = s.recvfrom(1000)
-	print(data[0].decode())
 
-	message  = input("Reveiver :     ")
-	encoded_message = message.encode()
+def recv_func():
+	while True:
+		data = s.recvfrom(1000)
+		#print(data)
+		print(data[0].decode())
 	
-	s.sendto(encoded_message,(data[1][0],data[1][1]))
+def send_func():
+	while True:
+		message  = input()
+		encoded_message = ("Receiver : " + message).encode()
+		#sender_address = data[1]	
+		#print(data[1])
+		s.sendto(encoded_message,('192.168.43.15',9998))
 
-		
+
+threading._start_new_thread(recv_func, ())
+threading._start_new_thread(send_func, ())
+
+
+# to make the threads run 
+while True:
+	pass		
